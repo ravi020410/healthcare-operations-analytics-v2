@@ -1,0 +1,323 @@
+{
+  "kpi": {
+    "total_admissions": 46500,
+    "avg_los_days": 5.26,
+    "readmission_rate_pct": 13.25,
+    "avg_wait_minutes": 24.2,
+    "avg_discharge_efficiency": 68.6,
+    "avg_satisfaction": 74.1,
+    "gross_billings": 499263162.0
+  },
+  "monthly_trend": [
+    {
+      "month": "2023-01",
+      "admissions": 1692
+    },
+    {
+      "month": "2023-02",
+      "admissions": 1439
+    },
+    {
+      "month": "2023-03",
+      "admissions": 1234
+    },
+    {
+      "month": "2023-04",
+      "admissions": 1171
+    },
+    {
+      "month": "2023-05",
+      "admissions": 1222
+    },
+    {
+      "month": "2023-06",
+      "admissions": 1242
+    },
+    {
+      "month": "2023-07",
+      "admissions": 1069
+    },
+    {
+      "month": "2023-08",
+      "admissions": 1049
+    },
+    {
+      "month": "2023-09",
+      "admissions": 1199
+    },
+    {
+      "month": "2023-10",
+      "admissions": 1234
+    },
+    {
+      "month": "2023-11",
+      "admissions": 1248
+    },
+    {
+      "month": "2023-12",
+      "admissions": 1744
+    },
+    {
+      "month": "2024-01",
+      "admissions": 1734
+    },
+    {
+      "month": "2024-02",
+      "admissions": 1330
+    },
+    {
+      "month": "2024-03",
+      "admissions": 1270
+    },
+    {
+      "month": "2024-04",
+      "admissions": 1202
+    },
+    {
+      "month": "2024-05",
+      "admissions": 1269
+    },
+    {
+      "month": "2024-06",
+      "admissions": 1172
+    },
+    {
+      "month": "2024-07",
+      "admissions": 1070
+    },
+    {
+      "month": "2024-08",
+      "admissions": 1073
+    },
+    {
+      "month": "2024-09",
+      "admissions": 1229
+    },
+    {
+      "month": "2024-10",
+      "admissions": 1187
+    },
+    {
+      "month": "2024-11",
+      "admissions": 1239
+    },
+    {
+      "month": "2024-12",
+      "admissions": 1698
+    },
+    {
+      "month": "2025-01",
+      "admissions": 1724
+    },
+    {
+      "month": "2025-02",
+      "admissions": 1396
+    },
+    {
+      "month": "2025-03",
+      "admissions": 1251
+    },
+    {
+      "month": "2025-04",
+      "admissions": 1261
+    },
+    {
+      "month": "2025-05",
+      "admissions": 1265
+    },
+    {
+      "month": "2025-06",
+      "admissions": 1210
+    },
+    {
+      "month": "2025-07",
+      "admissions": 1088
+    },
+    {
+      "month": "2025-08",
+      "admissions": 1110
+    },
+    {
+      "month": "2025-09",
+      "admissions": 1199
+    },
+    {
+      "month": "2025-10",
+      "admissions": 1257
+    },
+    {
+      "month": "2025-11",
+      "admissions": 1195
+    },
+    {
+      "month": "2025-12",
+      "admissions": 1528
+    }
+  ],
+  "by_department": [
+    {
+      "department": "Emergency",
+      "admissions": 8143,
+      "avg_los": 4.78,
+      "readmission_rate_pct": 13.32
+    },
+    {
+      "department": "Cardiology",
+      "admissions": 5803,
+      "avg_los": 4.8,
+      "readmission_rate_pct": 12.49
+    },
+    {
+      "department": "Pediatrics",
+      "admissions": 5470,
+      "avg_los": 4.75,
+      "readmission_rate_pct": 12.36
+    },
+    {
+      "department": "General Surgery",
+      "admissions": 5119,
+      "avg_los": 4.83,
+      "readmission_rate_pct": 12.21
+    },
+    {
+      "department": "Orthopedics",
+      "admissions": 4749,
+      "avg_los": 4.76,
+      "readmission_rate_pct": 12.78
+    },
+    {
+      "department": "Primary Care",
+      "admissions": 4080,
+      "avg_los": 4.78,
+      "readmission_rate_pct": 12.48
+    },
+    {
+      "department": "Oncology",
+      "admissions": 3764,
+      "avg_los": 8.23,
+      "readmission_rate_pct": 16.66
+    },
+    {
+      "department": "Obstetrics",
+      "admissions": 3564,
+      "avg_los": 4.77,
+      "readmission_rate_pct": 13.02
+    },
+    {
+      "department": "Neurology",
+      "admissions": 3179,
+      "avg_los": 4.77,
+      "readmission_rate_pct": 12.8
+    },
+    {
+      "department": "ICU",
+      "admissions": 2629,
+      "avg_los": 8.27,
+      "readmission_rate_pct": 16.62
+    }
+  ],
+  "financials_by_department": [
+    {
+      "department": "Emergency",
+      "gross_billings": 86760251.0,
+      "gross_margin": 39025685.0
+    },
+    {
+      "department": "Cardiology",
+      "gross_billings": 61227033.0,
+      "gross_margin": 27583572.0
+    },
+    {
+      "department": "Pediatrics",
+      "gross_billings": 55403295.0,
+      "gross_margin": 24996610.0
+    },
+    {
+      "department": "General Surgery",
+      "gross_billings": 54604364.0,
+      "gross_margin": 24567311.0
+    },
+    {
+      "department": "Orthopedics",
+      "gross_billings": 50226758.0,
+      "gross_margin": 22529634.0
+    },
+    {
+      "department": "Oncology",
+      "gross_billings": 46704011.0,
+      "gross_margin": 21008228.0
+    },
+    {
+      "department": "Primary Care",
+      "gross_billings": 42360870.0,
+      "gross_margin": 19013760.0
+    },
+    {
+      "department": "Obstetrics",
+      "gross_billings": 36908183.0,
+      "gross_margin": 16543443.0
+    },
+    {
+      "department": "Neurology",
+      "gross_billings": 33524719.0,
+      "gross_margin": 15023918.0
+    },
+    {
+      "department": "ICU",
+      "gross_billings": 31543678.0,
+      "gross_margin": 14203221.0
+    }
+  ],
+  "by_admission_type": [
+    {
+      "admission_type": "Emergency",
+      "admissions": 15676
+    },
+    {
+      "admission_type": "Elective",
+      "admissions": 12955
+    },
+    {
+      "admission_type": "Urgent",
+      "admissions": 10331
+    },
+    {
+      "admission_type": "Trauma",
+      "admissions": 4784
+    },
+    {
+      "admission_type": "Newborn",
+      "admissions": 2754
+    }
+  ],
+  "by_insurance": [
+    {
+      "insurance_type": "Private HMO",
+      "patients": 4780
+    },
+    {
+      "insurance_type": "Private PPO",
+      "patients": 3796
+    },
+    {
+      "insurance_type": "Medicare",
+      "patients": 3551
+    },
+    {
+      "insurance_type": "Medicaid",
+      "patients": 2411
+    },
+    {
+      "insurance_type": "Self-Pay",
+      "patients": 1693
+    },
+    {
+      "insurance_type": "Uninsured",
+      "patients": 1049
+    },
+    {
+      "insurance_type": "Unknown",
+      "patients": 720
+    }
+  ]
+}

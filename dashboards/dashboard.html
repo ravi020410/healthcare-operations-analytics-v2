@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hospital Operations Analytics — Executive Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#16233D;
+    --bg:#F5F6F8;
+    --card:#FFFFFF;
+    --border:#E3E6EB;
+    --teal:#1B7F79;
+    --teal-soft:#E4F2F0;
+    --amber:#C77D2E;
+    --amber-soft:#FBEEE1;
+    --muted:#69707D;
+    --danger:#B54A45;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  header{
+    background:var(--ink); color:#fff; padding:28px 40px 20px;
+  }
+  header .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:#8FB3C7; margin-bottom:6px;
+  }
+  header h1{margin:0 0 4px; font-size:24px; font-weight:700;}
+  header p{margin:0; color:#B7C2D0; font-size:13.5px;}
+  #pulse{width:100%; height:46px; display:block; margin-top:16px;}
+  main{max-width:1180px; margin:0 auto; padding:28px 40px 60px;}
+  .kpi-row{
+    display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-bottom:26px;
+  }
+  .kpi{
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:16px 14px;
+  }
+  .kpi .label{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px;}
+  .kpi .value{font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; color:var(--ink);}
+  .kpi .value.warn{color:var(--amber);}
+  .grid2{display:grid; grid-template-columns:1.4fr 1fr; gap:18px; margin-bottom:18px;}
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; margin-bottom:18px;}
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 20px;
+  }
+  .card h2{font-size:13px; margin:0 0 4px; font-weight:600;}
+  .card .sub{font-size:12px; color:var(--muted); margin:0 0 14px;}
+  .chart-wrap{position:relative; height:230px;}
+  .chart-wrap.short{height:180px;}
+  table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  th{text-align:left; color:var(--muted); font-weight:600; padding:6px 8px; border-bottom:1px solid var(--border); font-size:11px; text-transform:uppercase; letter-spacing:.03em;}
+  td{padding:7px 8px; border-bottom:1px solid #EEF0F3;}
+  .badge{
+    display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .badge.high{background:var(--amber-soft); color:var(--amber);}
+  .badge.ok{background:var(--teal-soft); color:var(--teal);}
+  .finding{
+    border-left:3px solid var(--teal); padding:10px 14px; background:var(--teal-soft);
+    border-radius:0 8px 8px 0; font-size:13px; margin-bottom:10px;
+  }
+  .finding.warn{border-left-color:var(--amber); background:var(--amber-soft);}
+  .finding b{display:block; font-family:'IBM Plex Mono',monospace; font-size:12px; margin-bottom:3px;}
+  footer{
+    max-width:1180px; margin:0 auto; padding:0 40px 40px; color:var(--muted); font-size:12px;
+  }
+  @media (max-width:900px){
+    .kpi-row{grid-template-columns:repeat(2,1fr);}
+    .grid2, .grid3{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Ravishree · Healthcare Operations Analytics</div>
+  <h1>Hospital Network — Executive Operations Dashboard</h1>
+  <p>3-year admissions window (2023–2025) · 46,500 cleaned admission records · Updated from live query re-run</p>
+  <canvas id="pulse"></canvas>
+</header>
+
+<main>
+
+  <div class="kpi-row" id="kpiRow"></div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Monthly Admission Volume</h2>
+      <p class="sub">36-month trend, all departments combined</p>
+      <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+    </div>
+    <div class="card">
+      <h2>Admission Type Mix</h2>
+      <p class="sub">Share of total admissions</p>
+      <div class="chart-wrap"><canvas id="typeChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Department Performance</h2>
+      <p class="sub">Volume, average length of stay, and readmission rate</p>
+      <table id="deptTable"></table>
+    </div>
+    <div class="card">
+      <h2>Financial Margin by Department</h2>
+      <p class="sub">Gross billings vs. margin after direct operating cost</p>
+      <div class="chart-wrap"><canvas id="finChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="card" style="grid-column: span 2;">
+      <h2>Key Findings — from the Random Forest readmission model</h2>
+      <p class="sub">notebooks/05_business_insights.ipynb · ROC-AUC 0.637</p>
+      <div class="finding warn">
+        <b>3.58x relative readmission risk</b>
+        Admissions with a "rushed" discharge efficiency score (0–40) are readmitted within 30 days
+        3.58x more often than admissions with an "excellent" discharge score (80–100) — 27.7% vs 7.7%.
+        This is the strongest single lever in the dataset.
+      </div>
+      <div class="finding">
+        <b>Weekend wait time — tested, not significant</b>
+        Weekend triage wait (24.3 min) was not meaningfully different from weekday wait (24.1 min).
+        Reported honestly as a negative finding rather than dropped.
+      </div>
+      <div class="finding">
+        <b>613 triage wait outliers flagged (Z &gt; 3)</b>
+        Concentrated in Emergency — see sql/03_business_analysis_queries.sql, Query 3.
+      </div>
+    </div>
+    <div class="card">
+      <h2>Patients by Insurance Type</h2>
+      <p class="sub">Intake distribution</p>
+      <div class="chart-wrap short"><canvas id="insChart"></canvas></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Built from a synthetic dataset generated to model realistic hospital operations data (HIPAA prevents use of
+  real EHR data in a public portfolio project). Every number on this dashboard is computed directly from
+  <span class="mono">data/cleaned/admissions_cleaned.csv</span> via <span class="mono">scripts/export_dashboard_data.py</span> —
+  see <span class="mono">reports/executive_report.md</span> for the full write-up and methodology notes.
+</footer>
+
+<script>
+const DATA = {"kpi": {"total_admissions": 46500, "avg_los_days": 5.26, "readmission_rate_pct": 13.25, "avg_wait_minutes": 24.2, "avg_discharge_efficiency": 68.6, "avg_satisfaction": 74.1, "gross_billings": 499263162.0}, "monthly_trend": [{"month": "2023-01", "admissions": 1692}, {"month": "2023-02", "admissions": 1439}, {"month": "2023-03", "admissions": 1234}, {"month": "2023-04", "admissions": 1171}, {"month": "2023-05", "admissions": 1222}, {"month": "2023-06", "admissions": 1242}, {"month": "2023-07", "admissions": 1069}, {"month": "2023-08", "admissions": 1049}, {"month": "2023-09", "admissions": 1199}, {"month": "2023-10", "admissions": 1234}, {"month": "2023-11", "admissions": 1248}, {"month": "2023-12", "admissions": 1744}, {"month": "2024-01", "admissions": 1734}, {"month": "2024-02", "admissions": 1330}, {"month": "2024-03", "admissions": 1270}, {"month": "2024-04", "admissions": 1202}, {"month": "2024-05", "admissions": 1269}, {"month": "2024-06", "admissions": 1172}, {"month": "2024-07", "admissions": 1070}, {"month": "2024-08", "admissions": 1073}, {"month": "2024-09", "admissions": 1229}, {"month": "2024-10", "admissions": 1187}, {"month": "2024-11", "admissions": 1239}, {"month": "2024-12", "admissions": 1698}, {"month": "2025-01", "admissions": 1724}, {"month": "2025-02", "admissions": 1396}, {"month": "2025-03", "admissions": 1251}, {"month": "2025-04", "admissions": 1261}, {"month": "2025-05", "admissions": 1265}, {"month": "2025-06", "admissions": 1210}, {"month": "2025-07", "admissions": 1088}, {"month": "2025-08", "admissions": 1110}, {"month": "2025-09", "admissions": 1199}, {"month": "2025-10", "admissions": 1257}, {"month": "2025-11", "admissions": 1195}, {"month": "2025-12", "admissions": 1528}], "by_department": [{"department": "Emergency", "admissions": 8143, "avg_los": 4.78, "readmission_rate_pct": 13.32}, {"department": "Cardiology", "admissions": 5803, "avg_los": 4.8, "readmission_rate_pct": 12.49}, {"department": "Pediatrics", "admissions": 5470, "avg_los": 4.75, "readmission_rate_pct": 12.36}, {"department": "General Surgery", "admissions": 5119, "avg_los": 4.83, "readmission_rate_pct": 12.21}, {"department": "Orthopedics", "admissions": 4749, "avg_los": 4.76, "readmission_rate_pct": 12.78}, {"department": "Primary Care", "admissions": 4080, "avg_los": 4.78, "readmission_rate_pct": 12.48}, {"department": "Oncology", "admissions": 3764, "avg_los": 8.23, "readmission_rate_pct": 16.66}, {"department": "Obstetrics", "admissions": 3564, "avg_los": 4.77, "readmission_rate_pct": 13.02}, {"department": "Neurology", "admissions": 3179, "avg_los": 4.77, "readmission_rate_pct": 12.8}, {"department": "ICU", "admissions": 2629, "avg_los": 8.27, "readmission_rate_pct": 16.62}], "financials_by_department": [{"department": "Emergency", "gross_billings": 86760251.0, "gross_margin": 39025685.0}, {"department": "Cardiology", "gross_billings": 61227033.0, "gross_margin": 27583572.0}, {"department": "Pediatrics", "gross_billings": 55403295.0, "gross_margin": 24996610.0}, {"department": "General Surgery", "gross_billings": 54604364.0, "gross_margin": 24567311.0}, {"department": "Orthopedics", "gross_billings": 50226758.0, "gross_margin": 22529634.0}, {"department": "Oncology", "gross_billings": 46704011.0, "gross_margin": 21008228.0}, {"department": "Primary Care", "gross_billings": 42360870.0, "gross_margin": 19013760.0}, {"department": "Obstetrics", "gross_billings": 36908183.0, "gross_margin": 16543443.0}, {"department": "Neurology", "gross_billings": 33524719.0, "gross_margin": 15023918.0}, {"department": "ICU", "gross_billings": 31543678.0, "gross_margin": 14203221.0}], "by_admission_type": [{"admission_type": "Emergency", "admissions": 15676}, {"admission_type": "Elective", "admissions": 12955}, {"admission_type": "Urgent", "admissions": 10331}, {"admission_type": "Trauma", "admissions": 4784}, {"admission_type": "Newborn", "admissions": 2754}], "by_insurance": [{"insurance_type": "Private HMO", "patients": 4780}, {"insurance_type": "Private PPO", "patients": 3796}, {"insurance_type": "Medicare", "patients": 3551}, {"insurance_type": "Medicaid", "patients": 2411}, {"insurance_type": "Self-Pay", "patients": 1693}, {"insurance_type": "Uninsured", "patients": 1049}, {"insurance_type": "Unknown", "patients": 720}]};
+
+const fmt = (n) => n.toLocaleString();
+const fmtM = (n) => '$' + (n/1e6).toFixed(1) + 'M';
+
+// KPI cards
+const kpi = DATA.kpi;
+const kpis = [
+  {label:'Total Admissions', value: fmt(kpi.total_admissions)},
+  {label:'Avg Length of Stay', value: kpi.avg_los_days + ' days'},
+  {label:'30-Day Readmission', value: kpi.readmission_rate_pct + '%', warn:true},
+  {label:'Avg Triage Wait', value: kpi.avg_wait_minutes + ' min'},
+  {label:'Avg Satisfaction', value: kpi.avg_satisfaction + '/100'},
+  {label:'Gross Billings', value: fmtM(kpi.gross_billings)},
+];
+document.getElementById('kpiRow').innerHTML = kpis.map(k =>
+  `<div class="kpi"><div class="label">${k.label}</div><div class="value ${k.warn?'warn':''}">${k.value}</div></div>`
+).join('');
+
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.color = '#69707D';
+
+// Header pulse sparkline
+new Chart(document.getElementById('pulse'), {
+  type:'line',
+  data:{
+    labels: DATA.monthly_trend.map(d=>d.month),
+    datasets:[{
+      data: DATA.monthly_trend.map(d=>d.admissions),
+      borderColor:'#5FA9C4', borderWidth:1.5, pointRadius:0, tension:0.35, fill:false
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{enabled:false}},
+    scales:{x:{display:false}, y:{display:false}}
+  }
+});
+
+// Monthly trend
+new Chart(document.getElementById('trendChart'), {
+  type:'line',
+  data:{
+    labels: DATA.monthly_trend.map(d=>d.month),
+    datasets:[{
+      label:'Admissions', data: DATA.monthly_trend.map(d=>d.admissions),
+      borderColor:'#1B7F79', backgroundColor:'rgba(27,127,121,0.08)',
+      borderWidth:2, pointRadius:0, tension:0.3, fill:true
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{ x:{ticks:{maxTicksLimit:8, font:{size:10}}, grid:{display:false}}, y:{grid:{color:'#EEF0F3'}} }
+  }
+});
+
+// Admission type doughnut
+new Chart(document.getElementById('typeChart'), {
+  type:'doughnut',
+  data:{
+    labels: DATA.by_admission_type.map(d=>d.admission_type),
+    datasets:[{
+      data: DATA.by_admission_type.map(d=>d.admissions),
+      backgroundColor:['#1B7F79','#5FA9C4','#C77D2E','#9C8AC9','#B54A45'],
+      borderWidth:2, borderColor:'#fff'
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'right', labels:{boxWidth:10, font:{size:11}}}}
+  }
+});
+
+// Department table
+const dept = DATA.by_department;
+document.getElementById('deptTable').innerHTML = `
+  <tr><th>Department</th><th>Admissions</th><th>Avg LOS</th><th>Readmit %</th></tr>
+  ${dept.map(d => `<tr>
+      <td>${d.department}</td>
+      <td class="mono">${fmt(d.admissions)}</td>
+      <td class="mono">${d.avg_los}d</td>
+      <td><span class="badge ${d.readmission_rate_pct > kpi.readmission_rate_pct ? 'high':'ok'}">${d.readmission_rate_pct}%</span></td>
+    </tr>`).join('')}
+`;
+
+// Financial margin chart
+const fin = DATA.financials_by_department;
+new Chart(document.getElementById('finChart'), {
+  type:'bar',
+  data:{
+    labels: fin.map(d=>d.department),
+    datasets:[
+      {label:'Gross Billings', data: fin.map(d=>d.gross_billings), backgroundColor:'#D9E4EF'},
+      {label:'Margin', data: fin.map(d=>d.gross_margin), backgroundColor:'#1B7F79'}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top', labels:{boxWidth:10, font:{size:11}}}},
+    scales:{ x:{ticks:{font:{size:9}, maxRotation:40, minRotation:40}, grid:{display:false}},
+             y:{ticks:{callback:v=>'$'+(v/1e6).toFixed(0)+'M'}, grid:{color:'#EEF0F3'}} }
+  }
+});
+
+// Insurance chart
+new Chart(document.getElementById('insChart'), {
+  type:'bar',
+  data:{
+    labels: DATA.by_insurance.map(d=>d.insurance_type),
+    datasets:[{data: DATA.by_insurance.map(d=>d.patients), backgroundColor:'#5FA9C4'}]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{ x:{grid:{color:'#EEF0F3'}}, y:{ticks:{font:{size:10}}, grid:{display:false}} }
+  }
+});
+</script>
+</body>
+</html>

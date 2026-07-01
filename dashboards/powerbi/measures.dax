@@ -1,0 +1,69 @@
+// Healthcare Operations Analytics — Power BI DAX Measures
+// Import data/cleaned/admissions_features.csv, data/raw/billing.csv,
+// data/raw/departments.csv, data/raw/satisfaction_surveys.csv as tables,
+// relate on admission_id / department_id, then paste these as new measures.
+
+Total Admissions =
+COUNTROWS ( admissions_features )
+
+Avg Length of Stay =
+AVERAGE ( admissions_features[length_of_stay_days] )
+
+Readmission Rate % =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( admissions_features ), admissions_features[readmitted_30d] = 1 ),
+    COUNTROWS ( admissions_features )
+) * 100
+
+Avg Triage Wait (min) =
+AVERAGE ( admissions_features[wait_minutes] )
+
+Avg Satisfaction Score =
+AVERAGE ( admissions_features[satisfaction_score] )
+
+Gross Billings =
+SUM ( billing[gross_charge] )
+
+Gross Margin =
+SUM ( billing[gross_charge] ) - SUM ( billing[direct_operating_cost] )
+
+Margin % =
+DIVIDE ( [Gross Margin], [Gross Billings] )
+
+Rushed Discharge Readmission Rate % =
+CALCULATE (
+    [Readmission Rate %],
+    admissions_features[discharge_efficiency_bucket] = "Rushed (0-40)"
+)
+
+Excellent Discharge Readmission Rate % =
+CALCULATE (
+    [Readmission Rate %],
+    admissions_features[discharge_efficiency_bucket] = "Excellent (80-100)"
+)
+
+Readmission Relative Risk (Rushed vs Excellent) =
+DIVIDE ( [Rushed Discharge Readmission Rate %], [Excellent Discharge Readmission Rate %] )
+
+Admissions MoM Change =
+VAR CurrentMonth = [Total Admissions]
+VAR PriorMonth =
+    CALCULATE (
+        [Total Admissions],
+        DATEADD ( 'Calendar'[Date], -1, MONTH )
+    )
+RETURN
+    CurrentMonth - PriorMonth
+
+Admissions 3-Month Moving Avg =
+AVERAGEX (
+    DATESINPERIOD ( 'Calendar'[Date], LASTDATE ( 'Calendar'[Date] ), -3, MONTH ),
+    [Total Admissions]
+)
+
+// --- Build notes ---
+// A 'Calendar' date table is required for the time-intelligence measures
+// (Admissions MoM Change, Admissions 3-Month Moving Avg). Generate one with:
+// Calendar = CALENDAR ( DATE(2023,1,1), DATE(2025,12,31) )
+// then mark it as a Date Table in Model view, and relate admissions_features[admission_date]
+// (need a proper Date column, not Datetime, for the relationship to be single-active).
