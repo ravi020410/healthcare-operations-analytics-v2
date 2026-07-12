@@ -14,6 +14,10 @@ Author: Ravikant Yadav
 """
 import numpy as np
 import pandas as pd
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+RAW_DATA = ROOT / "data" / "raw"
 from faker import Faker
 import random
 from datetime import datetime, timedelta
@@ -189,13 +193,13 @@ treatments = pd.DataFrame({
 })
 
 # ---------- Save raw (messy) ----------
-patients.to_csv("data/raw/patients.csv", index=False)
-doctors.to_csv("data/raw/doctors.csv", index=False)
-departments.to_csv("data/raw/departments.csv", index=False)
-admissions_raw.to_csv("data/raw/admissions.csv", index=False)
-billing.to_csv("data/raw/billing.csv", index=False)
-satisfaction.to_csv("data/raw/satisfaction_surveys.csv", index=False)
-treatments.to_csv("data/raw/treatments.csv", index=False)
+patients.to_csv(RAW_DATA / "patients.csv", index=False)
+doctors.to_csv(RAW_DATA / "doctors.csv", index=False)
+departments.to_csv(RAW_DATA / "departments.csv", index=False)
+admissions_raw.to_csv(RAW_DATA / "admissions.csv", index=False)
+billing.to_csv(RAW_DATA / "billing.csv", index=False)
+satisfaction.to_csv(RAW_DATA / "satisfaction_surveys.csv", index=False)
+treatments.to_csv(RAW_DATA / "treatments.csv", index=False)
 
 print(f"Generated {len(patients)} patients, {len(doctors)} doctors, {len(admissions_raw)} raw admission rows "
       f"({len(dupes)} intentional duplicates), {len(billing)} billing records, "

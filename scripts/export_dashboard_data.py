@@ -1,8 +1,11 @@
 import sqlite3
 import pandas as pd
 import json
+import re
+from pathlib import Path
 
-conn = sqlite3.connect("data/hospital.db")
+ROOT = Path(__file__).resolve().parents[1]
+conn = sqlite3.connect(ROOT / "data" / "hospital.db")
 
 out = {}
 
@@ -48,8 +51,18 @@ SELECT COALESCE(insurance_type,'Unknown') AS insurance_type, COUNT(*) AS patient
 FROM patients GROUP BY 1 ORDER BY patients DESC""", conn)
 out["by_insurance"] = insurance.to_dict("records")
 
-with open("dashboards/dashboard_data.json", "w") as f:
+with (ROOT / "dashboards" / "dashboard_data.json").open("w", encoding="utf-8") as f:
     json.dump(out, f, indent=2, default=str)
+
+# The standalone dashboard intentionally embeds its data so it can open without a
+# server. Keep that embedded payload synchronized with the JSON export.
+html_path = ROOT / "dashboards" / "dashboard.html"
+html = html_path.read_text(encoding="utf-8")
+payload = json.dumps(out, default=str)
+updated, replacements = re.subn(r"const DATA = .*?;\r?\n", f"const DATA = {payload};\n", html, count=1)
+if replacements != 1:
+    raise RuntimeError("Could not locate the embedded dashboard DATA payload")
+html_path.write_text(updated, encoding="utf-8")
 
 print("KPIs:", out["kpi"])
 print(f"Monthly points: {len(out['monthly_trend'])}, Departments: {len(out['by_department'])}")

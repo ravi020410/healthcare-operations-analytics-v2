@@ -3,6 +3,10 @@
 Star-schema layout: `admissions` is the central fact table. Rendered natively by
 GitHub — no image export needed.
 
+The diagram reflects the intended relational model. The local SQLite mirror is built
+from the canonical cleaned admissions CSV plus raw supporting extracts; its CSV key
+relationships are checked by `scripts/validate_project.py`.
+
 ```mermaid
 erDiagram
     DEPARTMENTS ||--o{ DOCTORS : employs

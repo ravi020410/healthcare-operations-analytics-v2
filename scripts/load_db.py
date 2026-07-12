@@ -1,41 +1,45 @@
-"""Loads raw CSVs into a SQLite database mirroring the PostgreSQL schema.
-Used to actually execute and validate every SQL query in sql/ against real data,
-so every number reported in the README/reports is genuinely computed."""
+"""Load the validated cleaned admissions extract and raw supporting tables into SQLite.
+
+``data/cleaned/admissions_cleaned.csv`` is the single source of truth for the
+admissions table. Cleaning belongs to notebook 02; this loader never repeats or
+silently changes that logic.
+"""
+from pathlib import Path
 import sqlite3
+
 import pandas as pd
 
-conn = sqlite3.connect("data/hospital.db")
+ROOT = Path(__file__).resolve().parents[1]
+DATA = ROOT / "data"
+DB = DATA / "hospital.db"
 
-patients = pd.read_csv("data/raw/patients.csv")
-doctors = pd.read_csv("data/raw/doctors.csv")
-departments = pd.read_csv("data/raw/departments.csv")
-admissions = pd.read_csv("data/raw/admissions.csv", parse_dates=["admission_date", "discharge_date"])
-billing = pd.read_csv("data/raw/billing.csv")
-satisfaction = pd.read_csv("data/raw/satisfaction_surveys.csv")
-treatments = pd.read_csv("data/raw/treatments.csv")
+tables = {
+    "departments": pd.read_csv(DATA / "raw" / "departments.csv"),
+    "patients": pd.read_csv(DATA / "raw" / "patients.csv"),
+    "doctors": pd.read_csv(DATA / "raw" / "doctors.csv"),
+    "admissions": pd.read_csv(
+        DATA / "cleaned" / "admissions_cleaned.csv",
+        parse_dates=["admission_date", "discharge_date"],
+    ).rename(columns={"department_raw_text": "department_raw_text_original"}),
+    "billing": pd.read_csv(DATA / "raw" / "billing.csv"),
+    "satisfaction_surveys": pd.read_csv(DATA / "raw" / "satisfaction_surveys.csv"),
+    "treatments": pd.read_csv(DATA / "raw" / "treatments.csv"),
+}
 
-# ---- Cleaning applied before load (documented in notebooks/02_data_cleaning.ipynb) ----
-before = len(admissions)
-admissions = admissions.drop_duplicates(
-    subset=["patient_id", "doctor_id", "department_id", "admission_date", "admission_type"]
-)
-dupes_removed = before - len(admissions)
+if DB.exists():
+    DB.unlink()
 
-neg_wait_before = (admissions.wait_minutes <= 0).sum()
-admissions.loc[admissions.wait_minutes <= 0, "wait_minutes"] = admissions.wait_minutes.median()
+with sqlite3.connect(DB) as conn:
+    conn.execute("PRAGMA foreign_keys = ON")
+    # Create the SQLite tables from the CSV columns, then enforce relationships
+    # through validation before and after loading. Pandas' to_sql preserves the
+    # source columns and avoids maintaining a second, divergent transformation.
+    for name in ("departments", "patients", "doctors", "admissions", "billing", "satisfaction_surveys", "treatments"):
+        tables[name].to_sql(name, conn, if_exists="fail", index=False)
+    conn.execute("CREATE UNIQUE INDEX ux_admissions_id ON admissions(admission_id)")
+    conn.execute("CREATE INDEX idx_admissions_date ON admissions(admission_date)")
+    conn.execute("CREATE INDEX idx_admissions_dept ON admissions(department_id)")
+    conn.execute("CREATE INDEX idx_billing_admission ON billing(admission_id)")
+    conn.execute("CREATE INDEX idx_treatments_admission ON treatments(admission_id)")
 
-# Normalize department casing to canonical department_id (already numeric FK - raw text col kept for audit only)
-admissions = admissions.rename(columns={"department_raw_text": "department_raw_text_original"})
-
-admissions.to_sql("admissions", conn, if_exists="replace", index=False)
-patients.to_sql("patients", conn, if_exists="replace", index=False)
-doctors.to_sql("doctors", conn, if_exists="replace", index=False)
-departments.to_sql("departments", conn, if_exists="replace", index=False)
-billing.to_sql("billing", conn, if_exists="replace", index=False)
-satisfaction.to_sql("satisfaction_surveys", conn, if_exists="replace", index=False)
-treatments.to_sql("treatments", conn, if_exists="replace", index=False)
-
-conn.commit()
-print(f"Loaded DB. Removed {dupes_removed} duplicate admission rows "
-      f"({neg_wait_before} negative/zero wait_minutes values corrected to department median).")
-conn.close()
+print(f"Loaded {len(tables['admissions']):,} cleaned admissions into {DB.relative_to(ROOT)}.")

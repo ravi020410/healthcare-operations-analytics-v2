@@ -1,14 +1,17 @@
 import nbformat
+from pathlib import Path
 
-nb = nbformat.read("notebooks/05_business_insights.ipynb", as_version=4)
+ROOT = Path(__file__).resolve().parents[1]
+notebook_path = ROOT / "notebooks" / "05_business_insights.ipynb"
+with notebook_path.open(encoding="utf-8") as f:
+    nb = nbformat.read(f, as_version=4)
 
 new_summary = """## Summary of quantified findings
 
 These numbers (not placeholders — computed above) feed directly into the executive report:
 
-1. Rushed discharges (efficiency 0-40) show a **3.58x relative readmission risk** versus
-   well-managed discharges (efficiency 80-100) — 27.7% vs 7.7%. This is the single strongest,
-   most actionable lever in the dataset.
+1. Low discharge-efficiency scores (0-40) have a **3.58x higher observed readmission rate** than
+   scores of 80-100 — 27.7% vs 7.7%. This is an association in synthetic data, not causal evidence.
 2. Weekend triage wait time is **not** meaningfully different from weekday wait time in this
    dataset (24.3 vs 24.1 min) — worth stating plainly rather than forcing a finding that
    isn't there. The earlier seasonal-volume assumption from EDA did not translate into a
@@ -23,5 +26,6 @@ for cell in nb.cells:
     if cell.cell_type == "markdown" and "Summary of quantified" in cell.source:
         cell.source = new_summary
 
-nbformat.write(nb, "notebooks/05_business_insights.ipynb")
+with notebook_path.open("w", encoding="utf-8") as f:
+    nbformat.write(nb, f)
 print("patched cleanly")

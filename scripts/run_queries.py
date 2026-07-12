@@ -11,8 +11,10 @@ import sqlite3
 import pandas as pd
 import statistics
 import json
+from pathlib import Path
 
-conn = sqlite3.connect("data/hospital.db")
+ROOT = Path(__file__).resolve().parents[1]
+conn = sqlite3.connect(ROOT / "data" / "hospital.db")
 
 results = {}
 
@@ -121,7 +123,7 @@ GROUP BY doc.employment_status
 q10["admissions_per_doctor"] = (q10.total_admissions / q10.doctor_count).round(1)
 results["Q10_physician_panel_load"] = q10.to_dict("records")
 
-with open("reports/query_results.json", "w") as f:
+with (ROOT / "reports" / "query_results.json").open("w", encoding="utf-8") as f:
     json.dump(results, f, indent=2, default=str)
 
 print(json.dumps(results["Q1_executive_kpis"], indent=2))

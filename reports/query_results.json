@@ -1,7 +1,7 @@
 {
   "Q1_executive_kpis": {
     "total_admissions": 46500,
-    "avg_los_days": 5.26,
+    "avg_los_days": 5.25,
     "readmission_rate_pct": 13.25,
     "avg_wait_minutes": 24.2,
     "avg_discharge_efficiency": 68.6,
@@ -52,61 +52,61 @@
     {
       "department": "Oncology",
       "staffed_beds": 28,
-      "total_bed_days": 30985.3,
-      "occupancy_rate_pct": 101.0
+      "total_bed_days": 30953.5,
+      "occupancy_rate_pct": 100.9
     },
     {
       "department": "ICU",
       "staffed_beds": 20,
-      "total_bed_days": 21729.1,
-      "occupancy_rate_pct": 99.1
+      "total_bed_days": 21687.5,
+      "occupancy_rate_pct": 98.9
     },
     {
       "department": "Cardiology",
       "staffed_beds": 42,
-      "total_bed_days": 27845.4,
+      "total_bed_days": 27835.7,
       "occupancy_rate_pct": 60.5
     },
     {
       "department": "Obstetrics",
       "staffed_beds": 26,
-      "total_bed_days": 16990.1,
+      "total_bed_days": 16988.2,
       "occupancy_rate_pct": 59.6
-    },
-    {
-      "department": "Primary Care",
-      "staffed_beds": 30,
-      "total_bed_days": 19482.6,
-      "occupancy_rate_pct": 59.3
     },
     {
       "department": "General Surgery",
       "staffed_beds": 38,
-      "total_bed_days": 24713.4,
+      "total_bed_days": 24702.2,
       "occupancy_rate_pct": 59.3
     },
     {
       "department": "Emergency",
       "staffed_beds": 60,
-      "total_bed_days": 38948.0,
+      "total_bed_days": 38930.2,
+      "occupancy_rate_pct": 59.2
+    },
+    {
+      "department": "Primary Care",
+      "staffed_beds": 30,
+      "total_bed_days": 19477.1,
       "occupancy_rate_pct": 59.2
     },
     {
       "department": "Pediatrics",
       "staffed_beds": 40,
-      "total_bed_days": 25974.8,
+      "total_bed_days": 25969.5,
       "occupancy_rate_pct": 59.2
     },
     {
       "department": "Orthopedics",
       "staffed_beds": 35,
-      "total_bed_days": 22609.4,
+      "total_bed_days": 22600.4,
       "occupancy_rate_pct": 58.9
     },
     {
       "department": "Neurology",
       "staffed_beds": 24,
-      "total_bed_days": 15168.5,
+      "total_bed_days": 15164.4,
       "occupancy_rate_pct": 57.7
     }
   ],

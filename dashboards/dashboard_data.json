@@ -1,7 +1,7 @@
 {
   "kpi": {
     "total_admissions": 46500,
-    "avg_los_days": 5.26,
+    "avg_los_days": 5.25,
     "readmission_rate_pct": 13.25,
     "avg_wait_minutes": 24.2,
     "avg_discharge_efficiency": 68.6,
@@ -188,13 +188,13 @@
     {
       "department": "Primary Care",
       "admissions": 4080,
-      "avg_los": 4.78,
+      "avg_los": 4.77,
       "readmission_rate_pct": 12.48
     },
     {
       "department": "Oncology",
       "admissions": 3764,
-      "avg_los": 8.23,
+      "avg_los": 8.22,
       "readmission_rate_pct": 16.66
     },
     {
@@ -212,7 +212,7 @@
     {
       "department": "ICU",
       "admissions": 2629,
-      "avg_los": 8.27,
+      "avg_los": 8.25,
       "readmission_rate_pct": 16.62
     }
   ],

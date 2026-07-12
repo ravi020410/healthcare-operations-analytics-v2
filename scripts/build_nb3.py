@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, "scripts")
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nb_builder import build_and_run
 
 cells = [
@@ -57,8 +58,9 @@ print(f"Satisfaction response rate: {admissions.satisfaction_score.notna().mean(
 
 ("markdown", """## Discharge efficiency bucket
 
-Used directly in the readmission model as a categorical signal, since the earlier
-EDA suggested the relationship with readmission isn't perfectly linear."""),
+Used for descriptive reporting and visualization. It is intentionally excluded from
+the model because it is derived directly from the continuous discharge-efficiency
+score, and including both would represent the same signal twice."""),
 ("code", """admissions['discharge_efficiency_bucket'] = pd.cut(
     admissions.discharge_efficiency, bins=[0,40,60,80,100],
     labels=['Rushed (0-40)','Below Avg (40-60)','Good (60-80)','Excellent (80-100)']

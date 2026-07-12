@@ -10,7 +10,7 @@ wait-time errors corrected during cleaning — see `notebooks/02_data_cleaning.i
 | Metric | Value |
 |---|---:|
 | Total Admissions | 46,500 |
-| Average Length of Stay | 5.26 days |
+| Average Length of Stay | 5.25 days |
 | 30-Day Readmission Rate | 13.25% |
 | Average Triage Wait | 24.2 minutes |
 | Average Discharge Efficiency Score | 68.6 / 100 |
@@ -22,7 +22,7 @@ re-run it yourself and the numbers will match exactly.
 
 ---
 
-## 2. The Central Finding: Discharge Efficiency Drives Readmission Risk
+## 2. Central Association: Discharge Efficiency and Readmission
 
 This is the most actionable result in the project. Bucketing admissions by discharge
 efficiency score and measuring 30-day readmission rate per bucket:
@@ -34,15 +34,16 @@ efficiency score and measuring 30-day readmission rate per bucket:
 | Good (60–80) | ~11% |
 | Excellent (80–100) | 7.7% |
 
-**Rushed discharges carry a 3.58x relative readmission risk compared to well-managed
-discharges.** This held up as the top feature by importance in the Random Forest
-classifier (`notebooks/05_business_insights.ipynb`), ahead of severity score and
-department. It's the one lever operations leadership can act on directly — severity
-and admission type aren't controllable, discharge process is.
+**Low discharge-efficiency scores are associated with a 3.58x higher observed readmission
+rate than high scores.** This was the top feature in the Random Forest classifier
+(`notebooks/05_business_insights.ipynb`). Because this is synthetic, observational data,
+the result does not establish a causal or clinical effect; it identifies a process signal
+that should be validated before operational use.
 
 **Recommendation:** Mandate a structured pre-discharge checklist for any admission
-where the real-time discharge-efficiency proxy (staffing ratio at time of discharge,
-time-of-day, day-of-week) predicts a "rushed" outcome, rather than applying it uniformly.
+where a validated operational proxy flags a low discharge-efficiency score, rather than
+applying it uniformly. Validate the intervention prospectively before claiming a reduction
+in readmissions.
 
 ---
 
@@ -112,8 +113,8 @@ implausibly high number.
 
 ## 7. Recommendations Summary
 
-1. **Structured discharge checklist**, targeted at predicted-rushed discharges — highest
-   expected impact on readmission rate.
+1. **Pilot a structured discharge checklist**, targeted at low-score discharges, then
+   measure whether outcomes change; this analysis alone cannot estimate causal impact.
 2. **Model a partial bed reallocation** from Cardiology/Obstetrics toward Oncology/ICU.
 3. **Re-run the financial margin analysis once department-specific operating cost data
    is available** — the current ~45% flat margin is a data limitation, not a finding.

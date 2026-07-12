@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, "scripts")
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nb_builder import build_and_run
 
 cells = [
@@ -7,7 +8,8 @@ cells = [
 **Healthcare Operations Analytics**
 
 Trains a classifier to predict 30-day readmission risk at the point of discharge,
-then translates the model's feature importances into operational recommendations."""),
+then translates feature associations into hypotheses for operational review. This synthetic,
+observational dataset cannot establish clinical or causal effects."""),
 
 ("code", """import pandas as pd
 import numpy as np
@@ -29,7 +31,7 @@ Target: `readmitted_30d`. We deliberately exclude `total_treatment_cost` and `ma
 from the feature set — those are *downstream* of the admission, not known at
 discharge-decision time, and including them would leak information a real early-warning
 system wouldn't have."""),
-("code", """categorical = ['department','admission_type','age_group','discharge_efficiency_bucket']
+("code", """categorical = ['department','admission_type','age_group']
 numeric = ['severity_score','length_of_stay_days','wait_minutes','discharge_efficiency',
            'patient_age','is_weekend_admission','is_flu_season','treatment_count']
 
@@ -102,7 +104,7 @@ plt.show()
 
 importances"""),
 
-("markdown", """## Business insight: rushed discharges
+("markdown", """## Business association: discharge efficiency and readmission
 
 Cross-referencing the top feature importances against the readmission-by-discharge-efficiency
 chart from `04_visualization.ipynb` quantifies the relationship directly:"""),
@@ -114,20 +116,21 @@ print(f"Readmission rate, rushed discharges:    {rushed*100:.1f}%")
 print(f"Readmission rate, excellent discharges: {excellent*100:.1f}%")
 print(f"Relative risk (rushed vs excellent):    {lift:.2f}x")"""),
 
-("markdown", "## Weekend admission wait-time gap (operational finding)"),
+("markdown", "## Weekend admission wait-time gap (operational finding - hypothesis testing)"),
 ("code", """weekend_wait = features[features.is_weekend_admission == True]['wait_minutes'].mean()
 weekday_wait = features[features.is_weekend_admission == False]['wait_minutes'].mean()
 gap_pct = (weekend_wait - weekday_wait) / weekday_wait * 100
 print(f"Weekday avg wait: {weekday_wait:.1f} min | Weekend avg wait: {weekend_wait:.1f} min")
-print(f"Weekend wait is {gap_pct:.1f}% higher than weekday.")"""),
+print(f"Weekend wait difference is {gap_pct:.2f}% (no operationally meaningful gap).")"""),
 
 ("markdown", """## Summary of quantified findings
 
 These numbers (not placeholders — computed above) feed directly into the executive report:
 
-1. Rushed discharges (efficiency 0-40) show measurably higher 30-day readmission risk
-   than well-managed discharges (efficiency 80-100) — see relative risk ratio above.
-2. Weekend admissions show a meaningfully higher average triage wait than weekday admissions.
+1. Low discharge-efficiency scores (0-40) are associated with a higher observed 30-day
+   readmission rate than high scores (80-100) — see relative rate ratio above. This is
+   not causal evidence and should be validated before operational intervention.
+2. Weekend admissions show virtually identical triage wait times as weekday admissions. This is a crucial tested-but-negative operational result (the weekend wait gap hypothesis does not hold).
 3. Model AUC sits in the realistic 0.65-0.75 range expected for readmission prediction using
    operational (non-clinical-history) features — consistent with published hospital readmission
    models, and a signal that the model isn't leaking future information.

@@ -1,8 +1,12 @@
--- Healthcare Operations Analytics — Schema
+-- Healthcare Operations Analytics — PostgreSQL reference schema
 -- PostgreSQL 14+
 -- Star-schema style: admissions is the central fact table, joined out to
 -- patients / doctors / departments (dimensions) and billing / treatments /
--- satisfaction_surveys (secondary facts).
+-- satisfaction_surveys (secondary facts). The local SQLite database is loaded from
+-- data/cleaned/admissions_cleaned.csv for admissions and raw supporting tables.
+-- SQLite tables are materialized by scripts/load_db.py; relationship integrity is
+-- verified by scripts/validate_project.py rather than claiming this PostgreSQL DDL
+-- is executed verbatim in SQLite.
 
 CREATE SCHEMA IF NOT EXISTS analytics;
 SET search_path TO analytics;

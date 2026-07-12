@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, "scripts")
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nb_builder import build_and_run
 
 cells = [
