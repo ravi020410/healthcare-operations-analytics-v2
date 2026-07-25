@@ -1,0 +1,313 @@
+{
+  "Q1_executive_kpis": {
+    "total_admissions": 46500,
+    "avg_los_days": 5.25,
+    "readmission_rate_pct": 13.25,
+    "avg_wait_minutes": 24.2,
+    "avg_discharge_efficiency": 68.6,
+    "avg_satisfaction": 74.1,
+    "gross_billings": 499263162.0
+  },
+  "Q2_monthly_trend": [
+    {
+      "admission_month": "2025-07",
+      "admissions_count": 1088,
+      "mom_change": -122.0,
+      "moving_avg_3m": 1187.7
+    },
+    {
+      "admission_month": "2025-08",
+      "admissions_count": 1110,
+      "mom_change": 22.0,
+      "moving_avg_3m": 1136.0
+    },
+    {
+      "admission_month": "2025-09",
+      "admissions_count": 1199,
+      "mom_change": 89.0,
+      "moving_avg_3m": 1132.3
+    },
+    {
+      "admission_month": "2025-10",
+      "admissions_count": 1257,
+      "mom_change": 58.0,
+      "moving_avg_3m": 1188.7
+    },
+    {
+      "admission_month": "2025-11",
+      "admissions_count": 1195,
+      "mom_change": -62.0,
+      "moving_avg_3m": 1217.0
+    },
+    {
+      "admission_month": "2025-12",
+      "admissions_count": 1528,
+      "mom_change": 333.0,
+      "moving_avg_3m": 1326.7
+    }
+  ],
+  "Q3_wait_outliers_count": 613,
+  "Q3_top_outlier_department": "Emergency",
+  "Q4_bed_utilization": [
+    {
+      "department": "Oncology",
+      "staffed_beds": 28,
+      "total_bed_days": 30953.5,
+      "occupancy_rate_pct": 100.9
+    },
+    {
+      "department": "ICU",
+      "staffed_beds": 20,
+      "total_bed_days": 21687.5,
+      "occupancy_rate_pct": 98.9
+    },
+    {
+      "department": "Cardiology",
+      "staffed_beds": 42,
+      "total_bed_days": 27835.7,
+      "occupancy_rate_pct": 60.5
+    },
+    {
+      "department": "Obstetrics",
+      "staffed_beds": 26,
+      "total_bed_days": 16988.2,
+      "occupancy_rate_pct": 59.6
+    },
+    {
+      "department": "General Surgery",
+      "staffed_beds": 38,
+      "total_bed_days": 24702.2,
+      "occupancy_rate_pct": 59.3
+    },
+    {
+      "department": "Emergency",
+      "staffed_beds": 60,
+      "total_bed_days": 38930.2,
+      "occupancy_rate_pct": 59.2
+    },
+    {
+      "department": "Primary Care",
+      "staffed_beds": 30,
+      "total_bed_days": 19477.1,
+      "occupancy_rate_pct": 59.2
+    },
+    {
+      "department": "Pediatrics",
+      "staffed_beds": 40,
+      "total_bed_days": 25969.5,
+      "occupancy_rate_pct": 59.2
+    },
+    {
+      "department": "Orthopedics",
+      "staffed_beds": 35,
+      "total_bed_days": 22600.4,
+      "occupancy_rate_pct": 58.9
+    },
+    {
+      "department": "Neurology",
+      "staffed_beds": 24,
+      "total_bed_days": 15164.4,
+      "occupancy_rate_pct": 57.7
+    }
+  ],
+  "Q5_readmission_by_efficiency": [
+    {
+      "bucket": "0-20",
+      "admissions": 56,
+      "readmission_rate_pct": 35.71
+    },
+    {
+      "bucket": "20-40",
+      "admissions": 1540,
+      "readmission_rate_pct": 27.4
+    },
+    {
+      "bucket": "40-60",
+      "admissions": 11805,
+      "readmission_rate_pct": 18.25
+    },
+    {
+      "bucket": "60-80",
+      "admissions": 22045,
+      "readmission_rate_pct": 12.3
+    },
+    {
+      "bucket": "80-100",
+      "admissions": 11054,
+      "readmission_rate_pct": 7.73
+    }
+  ],
+  "Q6_weekend_vs_weekday_wait": [
+    {
+      "day_type": "Weekday",
+      "avg_wait_minutes": 24.1,
+      "admissions": 31773
+    },
+    {
+      "day_type": "Weekend",
+      "avg_wait_minutes": 24.3,
+      "admissions": 14727
+    }
+  ],
+  "Q7_financial_margin_by_dept": [
+    {
+      "department": "Emergency",
+      "gross_billings": 86760251.0,
+      "operating_cost": 47734566.0,
+      "gross_margin": 39025685.0,
+      "margin_pct": 45.0
+    },
+    {
+      "department": "Cardiology",
+      "gross_billings": 61227033.0,
+      "operating_cost": 33643461.0,
+      "gross_margin": 27583572.0,
+      "margin_pct": 45.1
+    },
+    {
+      "department": "Pediatrics",
+      "gross_billings": 55403295.0,
+      "operating_cost": 30406685.0,
+      "gross_margin": 24996610.0,
+      "margin_pct": 45.1
+    },
+    {
+      "department": "General Surgery",
+      "gross_billings": 54604364.0,
+      "operating_cost": 30037053.0,
+      "gross_margin": 24567311.0,
+      "margin_pct": 45.0
+    },
+    {
+      "department": "Orthopedics",
+      "gross_billings": 50226758.0,
+      "operating_cost": 27697125.0,
+      "gross_margin": 22529634.0,
+      "margin_pct": 44.9
+    },
+    {
+      "department": "Oncology",
+      "gross_billings": 46704011.0,
+      "operating_cost": 25695783.0,
+      "gross_margin": 21008228.0,
+      "margin_pct": 45.0
+    },
+    {
+      "department": "Primary Care",
+      "gross_billings": 42360870.0,
+      "operating_cost": 23347110.0,
+      "gross_margin": 19013760.0,
+      "margin_pct": 44.9
+    },
+    {
+      "department": "Obstetrics",
+      "gross_billings": 36908183.0,
+      "operating_cost": 20364741.0,
+      "gross_margin": 16543443.0,
+      "margin_pct": 44.8
+    },
+    {
+      "department": "Neurology",
+      "gross_billings": 33524719.0,
+      "operating_cost": 18500801.0,
+      "gross_margin": 15023918.0,
+      "margin_pct": 44.8
+    },
+    {
+      "department": "ICU",
+      "gross_billings": 31543678.0,
+      "operating_cost": 17340457.0,
+      "gross_margin": 14203221.0,
+      "margin_pct": 45.0
+    }
+  ],
+  "Q8_treatment_cost_drivers": [
+    {
+      "procedure": "Physical Therapy",
+      "times_performed": 8749,
+      "avg_cost": 963.29
+    },
+    {
+      "procedure": "X-Ray",
+      "times_performed": 8792,
+      "avg_cost": 960.75
+    },
+    {
+      "procedure": "Bloodwork Panel",
+      "times_performed": 8792,
+      "avg_cost": 958.49
+    },
+    {
+      "procedure": "Consultation",
+      "times_performed": 8746,
+      "avg_cost": 957.96
+    },
+    {
+      "procedure": "CT Scan",
+      "times_performed": 8817,
+      "avg_cost": 954.82
+    },
+    {
+      "procedure": "Medication Administration",
+      "times_performed": 8893,
+      "avg_cost": 952.75
+    },
+    {
+      "procedure": "MRI Scan",
+      "times_performed": 8854,
+      "avg_cost": 951.22
+    },
+    {
+      "procedure": "Major Surgery",
+      "times_performed": 8752,
+      "avg_cost": 950.64
+    },
+    {
+      "procedure": "Minor Surgery",
+      "times_performed": 8655,
+      "avg_cost": 947.56
+    }
+  ],
+  "Q9_satisfaction_by_wait_band": [
+    {
+      "wait_band": "<15 min",
+      "avg_satisfaction": 74.1,
+      "responses": 9513
+    },
+    {
+      "wait_band": "15-30 min",
+      "avg_satisfaction": 74.2,
+      "responses": 9860
+    },
+    {
+      "wait_band": "30-60 min",
+      "avg_satisfaction": 74.1,
+      "responses": 6625
+    },
+    {
+      "wait_band": "60+ min",
+      "avg_satisfaction": 74.5,
+      "responses": 972
+    }
+  ],
+  "Q10_physician_panel_load": [
+    {
+      "employment_status": "Contract",
+      "doctor_count": 16,
+      "total_admissions": 5340,
+      "admissions_per_doctor": 333.8
+    },
+    {
+      "employment_status": "Full-Time",
+      "doctor_count": 99,
+      "total_admissions": 32856,
+      "admissions_per_doctor": 331.9
+    },
+    {
+      "employment_status": "Part-Time",
+      "doctor_count": 25,
+      "total_admissions": 8304,
+      "admissions_per_doctor": 332.2
+    }
+  ]
+}
