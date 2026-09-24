@@ -1,4 +1,4 @@
-# Data Model — Hospital Operations Analytics
+# Data Model - Hospital Operations Analytics
 
 ### Star-Schema Architecture
 `admissions` serves as the central operational fact table. 
