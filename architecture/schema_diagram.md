@@ -1,11 +1,10 @@
 # Data Model — Hospital Operations Analytics
 
-Star-schema layout: `admissions` is the central fact table. Rendered natively by
-GitHub — no image export needed.
+### Star-Schema Architecture
+`admissions` serves as the central operational fact table. 
 
-The diagram reflects the intended relational model. The local SQLite mirror is built
-from the canonical cleaned admissions CSV plus raw supporting extracts; its CSV key
-relationships are checked by `scripts/validate_project.py`.
+This diagram documents the enterprise relational model. The local analytical warehouse (`data/hospital.db`) is materialized from the canonical cleaned admissions extract and raw supporting tables, with all foreign key constraints and referential integrity asserted by `scripts/validate_project.py`.
+
 
 ```mermaid
 erDiagram
