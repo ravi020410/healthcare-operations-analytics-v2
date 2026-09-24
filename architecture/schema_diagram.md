@@ -76,5 +76,5 @@ erDiagram
 the unit of analysis for every operational question in this project (LOS, wait time,
 readmission, discharge efficiency) is a single hospital stay, not a person. A patient
 with 4 admissions across the 3-year window contributes 4 independent rows to every
-downstream query — which is the correct behavior for operational analytics, but worth
+downstream query - which is the correct behavior for operational analytics, but worth
 stating explicitly since it's a modeling decision, not a default.
