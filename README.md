@@ -1,7 +1,7 @@
 # Hospital Network Operations Analytics
 
-End-to-end analysis of a 3-year (2023–2025), 10-department hospital network dataset —
-46,500 admissions after cleaning — covering patient flow, discharge quality, capacity
+End-to-end analysis of a 3-year (2023–2025), 10-department hospital network dataset
+46,500 admissions after cleaning  covering patient flow, discharge quality, capacity
 utilization, and financial performance, with a Random Forest model predicting 30-day
 readmission risk at discharge.
 
@@ -28,13 +28,13 @@ specific data-quality problems real hospital operational extracts actually have:
   imbalanced 30-day readmission target (13.25% positive rate)
 
 Every one of those problems is found in `notebooks/01_eda.ipynb` and fixed with a
-documented rationale in `notebooks/02_data_cleaning.ipynb` — nothing is hidden or
+documented rationale in `notebooks/02_data_cleaning.ipynb` nothing is hidden or
 pre-cleaned before the analysis starts.
 
 ## What's actually in here (and what isn't)
 
 Every number in this README, the executive report, and the dashboard was computed by
-running the code in this repo against the generated dataset — re-run
+running the code in this repo against the generated dataset re-run
 `scripts/run_queries.py` yourself and you'll get the same numbers. There is one
 deliberate limitation, stated plainly rather than hidden: department-level operating
 cost is generated with a single random ratio rather than department-specific cost
@@ -52,7 +52,7 @@ clinical validation would be required before acting on it.
 
 A tested-but-negative result is also reported honestly: the hypothesis that weekend
 admissions face longer triage waits did **not** hold (24.3 min weekend vs 24.1 min
-weekday) — see `reports/executive_report.md` §4.
+weekday) see `reports/executive_report.md` §4.
 
 ## Project structure
 
