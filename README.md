@@ -1,6 +1,6 @@
 # Hospital Network Operations Analytics
 
-End-to-end analysis of a 3-year (2023–2025), 10-department hospital network dataset
+Analysis of a 3-year (2023–2025), 10-department hospital network dataset
 46,500 admissions after cleaning  covering patient flow, discharge quality, capacity
 utilization, and financial performance, with a Random Forest model predicting 30-day
 readmission risk at discharge.
