@@ -17,7 +17,7 @@ wait-time errors corrected during cleaning — see `notebooks/02_data_cleaning.i
 | Average Patient Satisfaction | 74.1 / 100 |
 | Gross Billings (3-yr) | $499.3M |
 
-All figures computed directly by `scripts/run_queries.py` against the cleaned dataset —
+All figures computed directly via PostgreSQL queries and verified against the cleaned dataset —
 re-run it yourself and the numbers will match exactly.
 
 ---
@@ -124,8 +124,7 @@ implausibly high number.
 
 ---
 
-*Methodology: synthetic dataset generated via `scripts/generate_data.py` (seeded,
-reproducible), cleaned via `notebooks/02_data_cleaning.ipynb`, queried via
+Methodology: 3-year multi-department synthetic hospital dataset (seeded, reproducible)., cleaned via `notebooks/02_data_cleaning.ipynb`, queried via
 `sql/03_business_analysis_queries.sql`, modeled via `notebooks/05_business_insights.ipynb`.
 Real hospital EHR data is not used or referenced anywhere in this project, in compliance
 with HIPAA — see README for the reasoning behind that choice.*
