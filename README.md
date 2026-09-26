@@ -80,6 +80,7 @@ weekday) see `reports/executive_report.md` §4.
 │   ├── 02_quality_checks.sql      # Diagnostic data quality validation queries
 │   └── 03_business_analysis_queries.sql # Window functions, CTEs, Z-scores & capacity KPIs
 └── visuals/                       # Analytical chart PNG exports
+```
 
 
 ## Tech stack
