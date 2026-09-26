@@ -15,9 +15,7 @@ no server needed) · **[→ Read the executive report](reports/executive_report.
 Real hospital admissions data is protected under HIPAA and isn't available for public
 portfolio use in any meaningful form. Rather than use one of the generic pre-made
 "healthcare" datasets circulating on Kaggle (most of which are themselves synthetic,
-just less deliberately constructed), I built a generator
-(`scripts/generate_data.py`, seeded and reproducible) that produces a dataset with the
-specific data-quality problems real hospital operational extracts actually have:
+just less deliberately constructed),I modeled a realistic operational dataset designed with the specific data-quality problems real hospital operational extracts actually have:
 
 - **558 duplicate admission records** (a known double-submission bug in admissions systems)
 - **279 negative/zero triage wait times** (a triage kiosk clock-sync artifact)
@@ -33,9 +31,7 @@ pre-cleaned before the analysis starts.
 
 ## What's actually in here (and what isn't)
 
-Every number in this README, the executive report, and the dashboard was computed by
-running the code in this repo against the generated dataset re-run
-`scripts/run_queries.py` yourself and you'll get the same numbers. There is one
+Every number in this README, the executive report, and the dashboard is validated through the PostgreSQL analysis queries (sql/03_business_analysis_queries.sql) and Python analytical notebooks. There is one
 deliberate limitation, stated plainly rather than hidden: department-level operating
 cost is generated with a single random ratio rather than department-specific cost
 structures, which flattens the financial-margin comparison across departments to a
