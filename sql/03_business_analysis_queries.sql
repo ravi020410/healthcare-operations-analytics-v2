@@ -1,7 +1,9 @@
 -- Advanced Business Analysis Queries
--- PostgreSQL 14+. Executed against the cleaned `analytics` schema.
--- Every result referenced in reports/executive_report.md was produced by
--- running these queries against the actual dataset (see scripts/run_queries.py).
+-- Database Engine: PostgreSQL 14+
+-- Executed against the cleaned `analytics` star schema.
+-- Covers operational KPIs, moving averages (LAG), Z-score anomaly detection,
+-- and capacity utilization metrics.
+
 
 -- =====================================================================
 -- Q1. Core Executive KPI Scorecard
