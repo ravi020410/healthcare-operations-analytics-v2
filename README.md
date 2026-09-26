@@ -8,6 +8,22 @@ readmission risk at discharge.
 **[→ View the live dashboard](dashboards/dashboard.html)** (open directly in a browser,
 no server needed) · **[→ Read the executive report](reports/executive_report.md)**
 
+## Interactive Power BI Reports
+
+The full 3-page interactive report is available in [`dashboards/powerbi/healthcare_operations_analytics.pbix`](dashboards/powerbi/healthcare_operations_analytics.pbix). High-resolution views of each reporting layer:
+
+### 1. Executive Operations Summary
+*Real-time operational KPIs, multi-year seasonal admission volume trends, and clinical department benchmarks.*
+![Executive Summary](visuals/powerbi/01_executive_summary.png)
+
+### 2. Financial Operations & Profitability
+*Department-level gross billings, direct operating costs, and operating margins with admission-type dynamic filtering.*
+![Financial Operations](visuals/powerbi/02_financial_operations.png)
+
+### 3. Clinical Quality & 30-Day Readmission Risk
+*Discharge efficiency cohorts, 30-day readmission relative risk (3.58x risk multiplier), and triage wait-time analysis.*
+![Clinical Quality](visuals/powerbi/03_clinical_quality.png)
+
 ---
 
 ## Why synthetic data, not a Kaggle dataset
@@ -76,6 +92,7 @@ weekday) see `reports/executive_report.md` §4.
 │   ├── 02_quality_checks.sql      # Diagnostic data quality validation queries
 │   └── 03_business_analysis_queries.sql # Window functions, CTEs, Z-scores & capacity KPIs
 └── visuals/                       # Analytical chart PNG exports
+    └── powerbi/                   # Power BI report page exports
 ```
 
 
