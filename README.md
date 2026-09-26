@@ -84,8 +84,7 @@ weekday) see `reports/executive_report.md` §4.
 
 ## Tech stack
 
-Python (pandas, NumPy, scikit-learn, matplotlib, seaborn) · SQL (PostgreSQL syntax,
-validated via SQLite) · Chart.js for the HTML dashboard · Power BI (DAX measures +
+Python (pandas, NumPy, scikit-learn, matplotlib, seaborn) · Database & SQL: PostgreSQL 14+ (Star schema design, CTEs, Window Functions LAG/Moving Avg, Z-score Outlier Detection) · Chart.js for the HTML dashboard · Power BI (DAX measures +
 build guide included, `.pbix` built locally — see `dashboards/powerbi/BUILD_GUIDE.md`)
 
 ## What I'd do with more time
