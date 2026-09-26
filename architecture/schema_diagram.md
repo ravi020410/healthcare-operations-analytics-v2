@@ -3,7 +3,7 @@
 ### Star-Schema Architecture
 `admissions` serves as the central operational fact table. 
 
-This diagram documents the enterprise relational model. The local analytical warehouse (`data/hospital.db`) is materialized from the canonical cleaned admissions extract and raw supporting tables, with all foreign key constraints and referential integrity asserted by `scripts/validate_project.py`.
+This diagram documents the enterprise relational star-schema modeled in PostgreSQL. The schema models 46,500 patient encounters across 10 hospital departments, enforcing referential integrity and strict foreign key relationships across clinical, operational, and financial entities.
 
 
 ```mermaid
