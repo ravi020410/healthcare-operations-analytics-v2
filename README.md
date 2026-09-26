@@ -45,7 +45,7 @@ limitation, not presented as a real finding.
 ## Headline result
 
 **Admissions with a low discharge-efficiency score (0–40) have a 3.58x higher observed
-30-day readmission rate than those scoring 80–100 (27.7% vs 7.7%).** This is an
+30-day readmission rate than those scoring 80-100 (27.7% vs 7.7%).** This is an
 association in synthetic operational data, not evidence that discharge efficiency causes
 readmission. It is a useful signal for prioritizing a real-world process review, where
 clinical validation would be required before acting on it.
@@ -85,7 +85,7 @@ weekday) see `reports/executive_report.md` §4.
 ## Tech stack
 
 Python (pandas, NumPy, scikit-learn, matplotlib, seaborn) · Database & SQL: PostgreSQL 14+ (Star schema design, CTEs, Window Functions LAG/Moving Avg, Z-score Outlier Detection) · Chart.js for the HTML dashboard · Power BI (DAX measures +
-build guide included, `.pbix` built locally — see `dashboards/powerbi/BUILD_GUIDE.md`)
+build guide included, `.pbix` built locally see `dashboards/powerbi/BUILD_GUIDE.md`)
 
 ## What I'd do with more time
 
@@ -94,7 +94,7 @@ build guide included, `.pbix` built locally — see `dashboards/powerbi/BUILD_GU
 - A proper time-series model (e.g. SARIMA) for the seasonal admission volume, instead
   of the simple 3-month moving average currently in the SQL layer
 - Real EHR-adjacent features (comorbidity count, prior admission history) if this were
-  ever run against real (de-identified, IRB-approved) data — operational features alone
+  ever run against real (de-identified, IRB-approved) data - operational features alone
   cap out readmission model performance around the AUC seen here, which matches what
   the published clinical literature on this problem reports
 
