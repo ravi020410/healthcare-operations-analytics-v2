@@ -1,5 +1,5 @@
-# Executive Report — Hospital Network Operations & Financial Review
-**Period:** Jan 2023 – Dec 2025 (3-year window) · **Prepared by:** Ravikant Yadav
+# Executive Report - Hospital Network Operations & Financial Review
+**Period:** Jan 2023 - Dec 2025 (3-year window) · **Prepared by:** Ravikant Yadav
 **Data:** 46,500 cleaned admission records (558 duplicate submissions and 279 clock-sync
 wait-time errors corrected during cleaning — see `notebooks/02_data_cleaning.ipynb`)
 
